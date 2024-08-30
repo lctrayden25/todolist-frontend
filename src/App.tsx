@@ -1,6 +1,6 @@
 import "./App.css";
 import PageWrapper from "./components/PageWrapper";
-import TodoList from "./components/TodoLIst";
+import TodoList from "./components/TodoList";
 
 function App() {
 	return (
