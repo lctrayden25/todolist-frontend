@@ -1,14 +1,14 @@
 import { Button, Flex, Form, Input } from "antd";
-import React, { useCallback, useState } from "react";
-import { API_URL } from "../helpers/constant";
+import { useCallback } from "react";
+// import { API_URL } from "../helpers/constant";
 
 type TodoType = {
 	todo: string;
 };
 
 const TodoList = () => {
-	const [data, setData] = useState<undefined>();
-	const [form] = Form.useForm();
+	// const [data, setData] = useState<undefined>();
+	// const [form] = Form.useForm();
 
 	const onFinish = useCallback(async (values: TodoType) => {
 		console.log(values);
