@@ -8,7 +8,7 @@ type PageWrapperProps = {
 
 const PageWrapper = ({ children }: PageWrapperProps) => {
 	return (
-		<Layout>
+		<Layout style={{ minHeight: "100vh" }}>
 			<Header
 				style={{
 					display: "flex",
