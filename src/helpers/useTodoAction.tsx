@@ -1,4 +1,4 @@
-import { message } from "antd";
+import { FormInstance, message } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { API_URL } from "./constant";
 
@@ -12,7 +12,7 @@ export type TodoType = {
 	todo: string;
 };
 
-export const useTodoAction = () => {
+export const useTodoAction = (form: FormInstance) => {
 	const [todoItems, setTodoItems] = useState<TodoData[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -51,6 +51,7 @@ export const useTodoAction = () => {
 				if (resData) {
 					await fetchTodoList();
 					setIsLoading(false);
+					form.setFieldValue("todo", "");
 				}
 			} catch (error) {
 				if (error instanceof Error) {
@@ -61,7 +62,7 @@ export const useTodoAction = () => {
 				setIsLoading(false);
 			}
 		},
-		[fetchTodoList]
+		[fetchTodoList, form]
 	);
 
 	const updateTodo = useCallback(
@@ -95,11 +96,34 @@ export const useTodoAction = () => {
 					method: "DELETE",
 				});
 				const resData = await res?.json();
-				if (resData) {
+				if (resData && !resData?.error) {
 					await fetchTodoList();
 				}
 			} catch (error) {
-				console.log(error);
+				if (error instanceof Error) {
+					message.error(error.message);
+				}
+				setIsLoading(false);
+			}
+		},
+		[fetchTodoList]
+	);
+
+	const deleteAllTodo = useCallback(
+		async (status: string) => {
+			try {
+				const res = await fetch(`${API_URL}/${status}`, {
+					method: "DELETE",
+				});
+				const resData = await res?.json();
+				if (resData && !resData?.error) {
+					await fetchTodoList();
+				}
+			} catch (error) {
+				if (error instanceof Error) {
+					message.error(error.message);
+				}
+				setIsLoading(false);
 			}
 		},
 		[fetchTodoList]
@@ -114,6 +138,7 @@ export const useTodoAction = () => {
 		createTodo,
 		updateTodo,
 		deleteTodo,
+		deleteAllTodo,
 		todoItems,
 		isLoading,
 	};

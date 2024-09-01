@@ -7,6 +7,7 @@ import {
 	List,
 	Typography,
 	Divider,
+	Tag,
 } from "antd";
 import { useMemo } from "react";
 import {
@@ -27,8 +28,15 @@ export type TodoData = {
 };
 
 const TodoList = () => {
-	const { createTodo, updateTodo, deleteTodo, todoItems, isLoading } =
-		useTodoAction();
+	const [form] = Form.useForm();
+	const {
+		createTodo,
+		updateTodo,
+		deleteTodo,
+		deleteAllTodo,
+		todoItems,
+		isLoading,
+	} = useTodoAction(form);
 
 	const incompletedTodo = useMemo(() => {
 		return todoItems?.filter((todo) => todo.status !== "complete");
@@ -40,13 +48,13 @@ const TodoList = () => {
 
 	return (
 		<Form
-			// name="todoForm"
 			onFinish={createTodo}
 			initialValues={{ todo: "" }}
 			autoComplete="off"
 			style={{ width: "100%" }}
+			form={form}
 		>
-			<Flex gap={32}>
+			<Flex gap={20}>
 				<Form.Item<TodoType> name="todo" style={{ width: "100%" }}>
 					<Input
 						type="text"
@@ -60,7 +68,17 @@ const TodoList = () => {
 					</Button>
 				</Form.Item>
 			</Flex>
-			<Card title="Todo" loading={isLoading}>
+			<Card
+				title={
+					<Tag color="orange" style={{ fontSize: "15px" }}>
+						Todo : {incompletedTodo?.length}
+					</Tag>
+				}
+				loading={isLoading}
+				extra={
+					<Button onClick={() => deleteAllTodo("incomplete")}>Clear</Button>
+				}
+			>
 				<List
 					itemLayout="vertical"
 					dataSource={incompletedTodo}
@@ -76,14 +94,15 @@ const TodoList = () => {
 								<ExclamationCircleOutlined style={{ color: "orange" }} />
 								<Typography.Text>{item?.name}</Typography.Text>
 							</Flex>
-							<Flex gap={5}>
-								<Button
-									type="primary"
+							<Flex gap={5} align="center">
+								<Tag
+									bordered={false}
+									color="blue"
 									onClick={() => updateTodo(item?.id as number)}
-									loading={isLoading}
+									style={{ cursor: "pointer" }}
 								>
-									Complete
-								</Button>
+									Set to done
+								</Tag>
 								<Button
 									style={{ border: "none" }}
 									onClick={() => deleteTodo(item?.id as number)}
@@ -97,7 +116,15 @@ const TodoList = () => {
 				/>
 			</Card>
 			<Divider />
-			<Card title="Done" loading={isLoading}>
+			<Card
+				title={
+					<Tag color="green" style={{ fontSize: "15px" }}>
+						Done : {completedTodo?.length}
+					</Tag>
+				}
+				loading={isLoading}
+				extra={<Button onClick={() => deleteAllTodo("complete")}>Clear</Button>}
+			>
 				<List
 					itemLayout="vertical"
 					dataSource={completedTodo}
