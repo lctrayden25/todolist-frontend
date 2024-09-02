@@ -92,7 +92,7 @@ export const useTodoAction = (form: FormInstance) => {
 	const deleteTodo = useCallback(
 		async (id: number): Promise<void> => {
 			try {
-				const res = await fetch(`${API_URL}/${id}`, {
+				const res = await fetch(`${API_URL}/id/${id}`, {
 					method: "DELETE",
 				});
 				const resData = await res?.json();
@@ -112,12 +112,13 @@ export const useTodoAction = (form: FormInstance) => {
 	const deleteAllTodo = useCallback(
 		async (status: string) => {
 			try {
-				const res = await fetch(`${API_URL}/${status}`, {
+				const res = await fetch(`${API_URL}/status/${status}`, {
 					method: "DELETE",
 				});
 				const resData = await res?.json();
 				if (resData && !resData?.error) {
 					await fetchTodoList();
+					message.success(`Clear all ${status} todo items.`);
 				}
 			} catch (error) {
 				if (error instanceof Error) {
