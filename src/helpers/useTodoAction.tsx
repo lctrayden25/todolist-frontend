@@ -1,6 +1,6 @@
 import { FormInstance, message } from "antd";
 import { useCallback, useEffect, useState } from "react";
-import { API_URL } from "./constant";
+import { API_URL, TodoStatus } from "./constant";
 
 export type TodoData = {
 	id: string | number;
@@ -71,7 +71,7 @@ export const useTodoAction = (form: FormInstance) => {
 				setIsLoading(true);
 				const res = await fetch(`${API_URL}/${id}`, {
 					method: "put",
-					body: JSON.stringify({ status: "complete" }),
+					body: JSON.stringify({ status: TodoStatus.Complete }),
 				});
 				const resData = await res?.json();
 				if (resData) {
