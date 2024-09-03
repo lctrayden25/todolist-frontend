@@ -25,7 +25,7 @@ const PageWrapper = ({ children }: PageWrapperProps) => {
 					maxWidth: "860px",
 					width: "100%",
 					margin: "auto",
-					padding: "3rem",
+					padding: "1rem",
 				}}
 			>
 				<Space.Compact
