@@ -38,6 +38,10 @@ export const useTodoAction = (form: FormInstance) => {
 	const createTodo = useCallback(
 		async (values: TodoType): Promise<void> => {
 			try {
+				if (!values?.todo) {
+					message.warning("Please enter todo");
+					return;
+				}
 				setIsLoading(true);
 				const res = await fetch(`${API_URL}/`, {
 					method: "POST",

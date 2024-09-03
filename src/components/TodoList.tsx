@@ -76,7 +76,12 @@ const TodoList = () => {
 				}
 				loading={isLoading}
 				extra={
-					<Button onClick={() => deleteAllTodo("incomplete")}>Clear</Button>
+					<Button
+						onClick={() => deleteAllTodo("incomplete")}
+						disabled={incompletedTodo?.length === 0}
+					>
+						Clear
+					</Button>
 				}
 			>
 				<List
@@ -123,7 +128,14 @@ const TodoList = () => {
 					</Tag>
 				}
 				loading={isLoading}
-				extra={<Button onClick={() => deleteAllTodo("complete")}>Clear</Button>}
+				extra={
+					<Button
+						onClick={() => deleteAllTodo("complete")}
+						disabled={completedTodo?.length === 0}
+					>
+						Clear
+					</Button>
+				}
 			>
 				<List
 					itemLayout="vertical"

@@ -1,4 +1,19 @@
-# React + TypeScript + Vite
+# Rayden Li + Todo List + Frontend
+
+## Getting Started
+
+```bash
+1. yarn install #install node module
+2. yarn dev #start the server
+
+yarn build #build the project for production
+```
+
+## Visit the frontend page
+
+```bash
+https://todolist-frontend-gamma-ecru.vercel.app/
+```
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
